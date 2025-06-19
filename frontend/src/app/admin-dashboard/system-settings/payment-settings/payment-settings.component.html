@@ -1,0 +1,32 @@
+<div class="card">
+    <div class="card-header">
+        <h2 class="card-title">Payment Configuration</h2>
+        <p class="card-description">Set up payment processing and pricing</p>
+    </div>
+
+    <div class="card-content">
+
+        <!-- Premium Vote Price -->
+        <div class="form-group">
+            <label for="premiumPrice">Premium Vote Price</label>
+            <div class="price-input">
+                <span class="currency-symbol">$</span>
+                <input id="premiumPrice" type="number" step="0.01" [(ngModel)]="settings.premiumVotePrice"
+                    (ngModelChange)="onChange('premiumVotePrice', settings.premiumVotePrice)" />
+            </div>
+        </div>
+
+        <!-- Payment Methods -->
+        <div class="form-group">
+            <h4 class="section-title">Payment Methods</h4>
+            <div class="payment-method" *ngFor="let method of paymentMethods">
+                <span>{{ method.name }}</span>
+                <label class="switch">
+                    <input type="checkbox" [(ngModel)]="method.enabled" />
+                    <span class="slider"></span>
+                </label>
+            </div>
+        </div>
+
+    </div>
+</div>

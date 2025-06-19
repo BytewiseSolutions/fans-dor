@@ -1,0 +1,134 @@
+<div class="user-management">
+    <!-- Header -->
+    <div class="header">
+        <div class="header-text">
+            <h2>User Management</h2>
+            <p>Manage system users and their permissions</p>
+        </div>
+        <button class="add-user-btn">
+            <i class="fas fa-user-plus me-2"></i>
+            Add User
+        </button>
+    </div>
+
+    <!-- User Statistics -->
+    <div class="stats-grid">
+        <div class="stat-card">
+            <div class="card-header">
+                <span>Total Users</span>
+                <i class="fas fa-users"></i>
+            </div>
+            <div class="card-body">
+                <h3>{{ totalUsers }}</h3>
+                <p>Registered accounts</p>
+            </div>
+        </div>
+
+        <div class="stat-card">
+            <div class="card-header">
+                <span>Active Users</span>
+                <i class="fas fa-calendar-check"></i>
+            </div>
+            <div class="card-body">
+                <h3>{{ activeUsers }}</h3>
+                <p>{{ (activeUsers / totalUsers * 100) | number:'1.0-1' }}% of total</p>
+            </div>
+        </div>
+
+        <div class="stat-card">
+            <div class="card-header">
+                <span>Administrators</span>
+                <i class="fas fa-shield-alt text-red-600"></i>
+            </div>
+            <div class="card-body">
+                <h3>{{ adminUsers }}</h3>
+                <p>Admin accounts</p>
+            </div>
+        </div>
+
+        <div class="stat-card">
+            <div class="card-header">
+                <span>Banned Users</span>
+                <i class="fas fa-ban"></i>
+            </div>
+            <div class="card-body">
+                <h3>{{ bannedUsers }}</h3>
+                <p>Require attention</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Filters -->
+    <div class="filter-card">
+        <div class="card-header">
+            <h4><i class="fas fa-search"></i>Search & Filter Users</h4>
+        </div>
+        <div class="card-body filter-form">
+            <input type="text" placeholder="Search by email or name..." [(ngModel)]="searchTerm" />
+            <select [(ngModel)]="filterRole">
+                <option value="all">All Roles</option>
+                <option value="admin">Admin</option>
+                <option value="moderator">Moderator</option>
+                <option value="user">User</option>
+            </select>
+            <select [(ngModel)]="filterStatus">
+                <option value="all">All Status</option>
+                <option value="active">Active</option>
+                <option value="inactive">Inactive</option>
+                <option value="banned">Banned</option>
+            </select>
+        </div>
+    </div>
+
+    <!-- Users Table -->
+    <div class="users-card">
+        <div class="card-header">
+            <h4>All Users ({{ filteredUsers.length }})</h4>
+            <p>Manage user accounts and permissions</p>
+        </div>
+        <div class="card-body">
+            <div class="users-table-wrapper">
+                <table class="users-table">
+                    <thead>
+                        <tr>
+                            <th>User</th>
+                            <th>Role</th>
+                            <th>Status</th>
+                            <th>Join Date</th>
+                            <th>Last Login</th>
+                            <th>Votes</th>
+                            <th>Spent</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let user of filteredUsers">
+                            <td>
+                                <strong>{{ user.name }}</strong>
+                                <div class="email">{{ user.email }}</div>
+                            </td>
+                            <td>
+                                <span [ngClass]="getRoleClass(user.role)" class="badge">
+                                    {{ user.role }}
+                                </span>
+                            </td>
+                            <td>
+                                <span [ngClass]="getStatusClass(user.status)" class="badge">
+                                    {{ user.status }}
+                                </span>
+                            </td>
+                            <td>{{ user.joinDate }}</td>
+                            <td>{{ user.lastLogin }}</td>
+                            <td>{{ user.votesCount }}</td>
+                            <td>${{ user.totalSpent }}</td>
+                            <td class="actions">
+                                <button class="action-btn">Edit</button>
+                                <button class="action-btn">View</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

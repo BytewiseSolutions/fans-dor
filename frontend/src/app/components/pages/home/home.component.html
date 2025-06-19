@@ -1,0 +1,110 @@
+<section class="landing-hero">
+    <div class="hero-grid">
+        <div class="hero-content">
+            <h1>CELEBRATE FOOTBALL'S BEST TALENT<br />FROM AROUND THE WORLD.</h1>
+            <p>Cast your vote and have a say in picking football's cream of the crop.</p>
+            <div class="hero-buttons">
+                <a routerLink="/category/masculin" class="btn-vote">Vote Now</a>
+                <a routerLink="/how-it-works" class="btn-how">How it Works</a>
+            </div>
+        </div>
+
+        <div class="hero-slider">
+            <img [src]="sliderImages[currentSlide]" alt="Football star" />
+        </div>
+    </div>
+</section>
+
+<section class="featured-voting-section">
+    <h2>Featured Categories</h2>
+
+    <!-- Loading Message -->
+    <p class="loading-message" *ngIf="isLoading">Loading featured categories...</p>
+
+    <!-- Error Message -->
+    <p class="error-message" *ngIf="hasError">⚠️ Failed to load featured categories. Please try again later.</p>
+
+    <!-- No Categories Message -->
+    <p class="empty-message" *ngIf="!isLoading && !hasError && objectKeys(groupedNominees).length === 0">
+        No featured categories available at the moment.
+    </p>
+
+    <!-- Grouped Categories -->
+    <div class="category-groups"> <!-- Wrapper grid -->
+        <div class="category-group" *ngFor="let group of groupedNominees | keyvalue">
+            <h3>{{ group.key }}</h3>
+
+            <div *ngIf="group.value.length; else noNominees">
+                <div class="nominee-pair">
+                    <div class="nominee-card" *ngFor="let nominee of group.value | slice:0:visibleCounts[group.key]">
+                        <img [src]="nominee.photo || 'assets/players/default_player.jpg'"
+                            [alt]="nominee.playerName || 'Nominee Photo'" />
+                        <h4>{{ nominee.playerName }}</h4>
+                        <p class="club">{{ nominee.clubName }}</p>
+                        <p class="votes">{{ nominee.votes || 0 }} votes</p>
+                        <div class="action-buttons">
+                            <a class="btn-vote" [routerLink]="getNomineeLink(nominee)"
+                                [queryParams]="getNomineeQuery(nominee)">
+                                Vote
+                            </a>
+                            <button class="btn-bio" (click)="openPersonDetails(nominee)">Bio</button>
+                        </div>
+                    </div>
+                </div>
+
+                <button *ngIf="group.value.length > visibleCounts[group.key]" class="load-more-btn"
+                    (click)="loadMore(group.key)">
+                    Load More
+                </button>
+            </div>
+
+            <ng-template #noNominees>
+                <p class="empty-message">No nominees available for this category.</p>
+            </ng-template>
+        </div>
+    </div>
+</section>
+
+
+<section class="discover-vote-section">
+    <div class="discover-grid">
+        <div class="discover-text">
+            <h2>DISCOVER AND VOTE FOR<br />OUTSTANDING<br />SOCCER PERSONALITIES</h2>
+            <p>Explore different categories and start voting for your favourite coach, fan, journalist etc.</p>
+            <div class="discover-buttons">
+                <a routerLink="/categories" class="btn-categories">Categories</a>
+                <a routerLink="/category/masculin" class="btn-vote">Vote</a>
+            </div>
+        </div>
+
+        <div class="discover-image">
+            <img [src]="fooballCoach[0]" alt="Explore voting categories" />
+        </div>
+    </div>
+</section>
+
+<section class="extra-nominees">
+    <h2>Discover More Players</h2>
+    <div class="player-grid">
+        <div class="player-image" *ngFor="let player of additionalPlayers" (click)="openPersonDetails(player)">
+            <img [src]="player.image" [alt]="player.name" />
+        </div>
+    </div>
+</section>
+
+<div class="player-details-modal" *ngIf="selectedPerson">
+    <div class="player-details-content">
+        <img [src]="selectedPerson.photo || selectedPerson.image"
+            [alt]="selectedPerson.playerName || selectedPerson.name" />
+        <h3>{{ selectedPerson.playerName || selectedPerson.name }}</h3>
+        <p><strong>Club:</strong> {{ selectedPerson.clubName || selectedPerson.club }}</p>
+        <p><strong>Description:</strong> {{ selectedPerson.description }}</p>
+        <p><strong>Votes:</strong> {{ selectedPerson.votes | number }}</p>
+
+        <a class="btn-vote" [routerLink]="getVoteLink(selectedPerson)" [queryParams]="getVoteQuery(selectedPerson)">
+            Vote
+        </a>
+
+        <button class="close-btn" (click)="closePersonDetails()">Close</button>
+    </div>
+</div>

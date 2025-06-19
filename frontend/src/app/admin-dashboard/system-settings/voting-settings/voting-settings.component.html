@@ -1,0 +1,42 @@
+<div class="card">
+    <div class="card-header">
+        <h2 class="card-title">Voting Configuration</h2>
+        <p class="card-description">Control voting behavior and limits</p>
+    </div>
+    <div class="card-content">
+
+        <!-- Enable Voting -->
+        <div class="form-row maintenance-mode">
+            <div>
+                <label>Enable Voting</label>
+                <p class="description">Allow users to cast votes</p>
+            </div>
+            <label class="switch">
+                <input type="checkbox" [(ngModel)]="settings.votingEnabled" />
+                <span class="slider"></span>
+            </label>
+        </div>
+
+        <!-- Max Votes Per User -->
+        <div class="form-group">
+            <label for="maxVotes">Maximum Votes Per User</label>
+            <input id="maxVotes" type="number" [(ngModel)]="settings.maxVotesPerUser" />
+            <p class="description">Set to 0 for unlimited votes</p>
+        </div>
+
+        <!-- Vote Categories -->
+        <div class="form-group">
+            <h4 class="section-title">Vote Categories</h4>
+            <div class="vote-categories-container">
+                <div class="vote-category" *ngFor="let category of voteCategories">
+                    <span>{{ category.name }}</span>
+                    <label class="toggle-switch">
+                        <input type="checkbox" [(ngModel)]="category.enabled" />
+                        <span class="slider"></span>
+                    </label>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>

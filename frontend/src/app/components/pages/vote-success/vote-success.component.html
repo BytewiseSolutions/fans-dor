@@ -1,0 +1,9 @@
+<section class="thank-you" *ngIf="voteSubmitted">
+    <h2>
+        <i class="fa-solid fa-champagne-glasses" style="color:goldenrod;"></i>
+        Thank You for Voting!
+    </h2>
+    <p>Your vote for <strong>{{ nomineeName }}</strong> has been recorded.</p>
+    <p>A confirmation was sent to <strong>{{ email }}</strong>.</p>
+    <a routerLink="/">Back to Home</a>
+</section>

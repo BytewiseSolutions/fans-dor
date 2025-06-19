@@ -1,0 +1,14 @@
+[
+  { "id": "feminin", "name": "Fans d'Or Feminine" },
+  { "id": "masculin", "name": "Fans d'Or Masculine" },
+  { "id": "podcast", "name": "Fans d'Or Podcast" },
+  { "id": "publication", "name": "Fans d'Or Publication" },
+  { "id": "vicente-del-bosque", "name": "Fans d'Or Vicente del Bosque" },
+  { "id": "presenter", "name": "Fans d'Or Presenter" },
+  { "id": "youtube", "name": "Fans d'Or Chaine YouTube" },
+  { "id": "journalist", "name": "Fans d'Or Journalist" },
+  { "id": "broadcaster", "name": "Fans d'Or Broadcaster" },
+  { "id": "fan-loyal", "name": "Fans d'Or Fan Loyal" },
+  { "id": "equipe-feminine", "name": "Fans d'Or Equipe Féminine" },
+  { "id": "equipe-masculine", "name": "Fans d'Or Equipe Masculine " }
+]

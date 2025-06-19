@@ -1,0 +1,40 @@
+<!-- general-settings.component.html -->
+<div class="card">
+    <div class="card-header">
+        <h2 class="card-title">General Settings</h2>
+        <p class="card-description">Basic site configuration and appearance</p>
+    </div>
+    <div class="card-content">
+        <div class="grid">
+            <div class="form-group">
+                <label for="siteName">Site Name</label>
+                <input id="siteName" type="text" [(ngModel)]="settings.siteName" />
+            </div>
+
+            <div class="form-group">
+                <label for="currency">Default Currency</label>
+                <select id="currency" [(ngModel)]="settings.currency">
+                    <option value="USD">USD - US Dollar</option>
+                    <option value="EUR">EUR - Euro</option>
+                    <option value="GBP">GBP - British Pound</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="siteDescription">Site Description</label>
+            <textarea id="siteDescription" [(ngModel)]="settings.siteDescription" rows="3"></textarea>
+        </div>
+
+        <div class="maintenance-mode">
+            <div>
+                <label>Maintenance Mode</label>
+                <p class="description">Temporarily disable the site for maintenance</p>
+            </div>
+            <label class="switch">
+                <input type="checkbox" [(ngModel)]="settings.maintenanceMode" />
+                <span class="slider"></span>
+            </label>
+        </div>
+    </div>
+</div>

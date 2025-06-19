@@ -1,0 +1,40 @@
+<section class="about-hero">
+    <div class="container">
+        <h1>About Fans D’Or</h1>
+        <p>
+            Fans D’Or is a <strong>global digital platform</strong> allowing fans to celebrate and vote for their
+            favourite <strong>footballers, coaches, journalists</strong>, and <strong>content creators</strong>.
+        </p>
+        <p>
+            Our mission is to <strong>give power to the people</strong> and reward talent with recognition and
+            <strong>financial gain</strong>.
+        </p>
+    </div>
+</section>
+
+<section class="about-details">
+    <div class="details-grid">
+<div class="detail-card" *ngFor="let detail of details; let i = index" [ngStyle]="{'--card-index': i}">
+    <h3>{{ detail.title }}</h3>
+    <p>{{ detail.text }}</p>
+</div>
+
+    </div>
+</section>
+
+<section class="about-features">
+    <h2>What Makes Us Different</h2>
+    <div class="feature-grid">
+        <div class="feature-card" *ngFor="let feature of features">
+            <i class="fa-solid {{ feature.icon }}"></i>
+            <h3>{{ feature.title }}</h3>
+            <p>{{ feature.description }}</p>
+        </div>
+    </div>
+</section>
+
+<section class="about-cta">
+    <h2>Join the Revolution</h2>
+    <p>We’re reshaping football recognition — one fan, one vote at a time.</p>
+    <a routerLink="/categories" class="btn-join">Explore Categories</a>
+</section>

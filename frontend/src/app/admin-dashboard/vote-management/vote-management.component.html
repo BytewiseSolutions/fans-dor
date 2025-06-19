@@ -1,0 +1,130 @@
+<div class="vote-management">
+
+    <!-- Header -->
+    <div class="header">
+        <div>
+            <h2>Vote Management</h2>
+            <p>Monitor and analyze all voting activity</p>
+        </div>
+        <button class="btn-primary">
+            <i class="fas fa-download"></i>
+            Export Data
+        </button>
+    </div>
+
+    <!-- Statistics Cards -->
+    <div class="stats">
+        <div class="card">
+            <div class="card-header">
+                <h3>Total Votes</h3>
+                <i class="fas fa-vote-yea icon blue"></i>
+            </div>
+            <div class="card-content">
+                <div class="value">{{ totalVotes }}</div>
+                <p class="note"><i class="fas fa-chart-line"></i> +12% from yesterday</p>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header">
+                <h3>Premium Votes</h3>
+                <i class="fas fa-user icon purple"></i>
+            </div>
+            <div class="card-content">
+                <div class="value">{{ premiumVotes }}</div>
+                <p class="note">{{ (premiumVotes / totalVotes * 100).toFixed(1) }}% of total votes</p>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header">
+                <h3>Free Votes</h3>
+                <i class="fas fa-calendar icon green"></i>
+            </div>
+            <div class="card-content">
+                <div class="value">{{ freeVotes }}</div>
+                <p class="note">{{ (freeVotes / totalVotes * 100).toFixed(1) }}% of total votes</p>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header">
+                <h3>Vote Revenue</h3>
+                <i class="fas fa-chart-line icon yellow"></i>
+            </div>
+            <div class="card-content">
+                <div class="value">${{ totalRevenue }}</div>
+                <p class="note">From premium votes</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Voting Trends Chart -->
+    <div class="card full">
+        <div class="card-header">
+            <h3>Voting Trends (Last 24 Hours)</h3>
+            <p class="muted">Hourly breakdown of voting activity</p>
+        </div>
+        <div class="card-content">
+            <canvas baseChart [data]="barChartData" [options]="barChartOptions" [type]="barChartType">
+            </canvas>
+        </div>
+    </div>
+
+
+    <!-- Filters -->
+    <div class="card full">
+        <div class="card-header">
+            <i class="fas fa-filter"></i>
+            <h3>Filter Votes</h3>
+        </div>
+        <div class="card-content filters">
+            <input type="text" [(ngModel)]="searchTerm" (input)="onSearchTermChange($event)"
+                placeholder="Search by nominee or voter email..." />
+            <select [(ngModel)]="filterType" (change)="onFilterChange(filterType)">
+                <option value="all">All Types</option>
+                <option value="free">Free Votes</option>
+                <option value="premium">Premium Votes</option>
+            </select>
+        </div>
+    </div>
+
+    <!-- Table -->
+    <div class="card full">
+        <div class="card-header">
+            <h3>Recent Votes ({{ filteredVotes.length }})</h3>
+            <p class="muted">Detailed view of all voting activity</p>
+        </div>
+        <div class="card-content">
+            <table class="vote-table">
+                <thead>
+                    <tr>
+                        <th>Voter</th>
+                        <th>Nominee</th>
+                        <th>Category</th>
+                        <th>Type</th>
+                        <th>Amount</th>
+                        <th>Timestamp</th>
+                        <th>IP Address</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let v of filteredVotes">
+                        <td>{{ v.voterEmail }}</td>
+                        <td>{{ v.nominee }}</td>
+                        <td><span class="badge-outline">{{ v.category }}</span></td>
+                        <td>
+                            <span [class.premium]="v.voteType === 'premium'" [class.free]="v.voteType === 'free'">
+                                {{ v.voteType }}
+                            </span>
+                        </td>
+                        <td>{{ v.amount ? '$' + v.amount : 'Free' }}</td>
+                        <td>{{ v.timestamp }}</td>
+                        <td class="mono">{{ v.ipAddress }}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</div>

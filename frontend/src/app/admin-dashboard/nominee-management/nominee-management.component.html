@@ -1,0 +1,172 @@
+<div class="nominee-management-container">
+    <!-- Header with Actions -->
+    <div class="header-actions">
+        <div>
+            <h2 class="title">Nominee Management</h2>
+            <p class="subtitle">Manage all nominees across different categories</p>
+        </div>
+        <button class="btn primary-btn" (click)="openDialog()">Add Nominee</button>
+    </div>
+
+    <!-- Add Nominee Modal -->
+    <div *ngIf="showDialog" class="dialog-backdrop">
+        <div class="dialog">
+            <h3 class="dialog-title">Add New Nominee</h3>
+            <p class="dialog-subtitle">Create a new nominee for the voting categories.</p>
+            <form (ngSubmit)="addNominee()" class="form-grid">
+                <div class="form-group">
+                    <label for="playerName">Player Name</label>
+                    <input id="playerName" type="text" [(ngModel)]="newNominee.playerName" name="playerName"
+                        placeholder="Enter player name" required />
+                </div>
+
+                <div class="form-group">
+                    <label for="clubName">Club Name</label>
+                    <input id="clubName" type="text" [(ngModel)]="newNominee.clubName" name="clubName"
+                        placeholder="Enter club name" required />
+                </div>
+
+                <div class="form-group">
+                    <label for="category">Category</label>
+                    <select id="category" [(ngModel)]="newNominee.category" name="category" required>
+                        <option value="" disabled selected>Select category</option>
+                        <option *ngFor="let category of categories" [value]="category">{{ category }}</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="description">Description</label>
+                    <textarea id="description" [(ngModel)]="newNominee.description" name="description"
+                        placeholder="Enter description" required></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="photo">Photo</label>
+                    <input id="photo" type="file" (change)="onPhotoSelected($event)" accept="image/*" />
+                    <div *ngIf="newNominee.photo" class="photo-preview">
+                        <img [src]="newNominee.photo" alt="Photo preview" />
+                    </div>
+                </div>
+
+                <div class="form-actions">
+                    <button type="button" class="btn secondary-btn" (click)="closeDialog()">Cancel</button>
+                    <button type="submit" class="btn primary-btn">Add Nominee</button>
+                </div>
+            </form>
+
+        </div>
+    </div>
+
+    <!-- Edit Nominee Modal -->
+    <div *ngIf="showEditDialog" class="dialog-backdrop">
+        <div class="dialog">
+            <h3 class="dialog-title">Edit Nominee</h3>
+            <p class="dialog-subtitle">Update nominee details below.</p>
+            <form (ngSubmit)="updateNominee()" class="form-grid">
+                <div class="form-group">
+                    <label for="editPlayerName">Player Name</label>
+                    <input id="editPlayerName" type="text" [(ngModel)]="editNomineeData.playerName"
+                        name="editPlayerName" placeholder="Enter player name" required />
+                </div>
+
+                <div class="form-group">
+                    <label for="editClubName">Club Name</label>
+                    <input id="editClubName" type="text" [(ngModel)]="editNomineeData.clubName" name="editClubName"
+                        placeholder="Enter club name" required />
+                </div>
+
+                <div class="form-group">
+                    <label for="editCategory">Category</label>
+                    <select id="editCategory" [(ngModel)]="editNomineeData.category" name="editCategory" required>
+                        <option value="" disabled>Select category</option>
+                        <option *ngFor="let category of categories" [value]="category">{{ category }}</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="editDescription">Description</label>
+                    <textarea id="editDescription" [(ngModel)]="editNomineeData.description" name="editDescription"
+                        placeholder="Enter description" required></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="editPhoto">Photo</label>
+                    <input id="editPhoto" type="file" (change)="onEditPhotoSelected($event)" accept="image/*" />
+                    <div *ngIf="editNomineeData.photo" class="photo-preview">
+                        <img [src]="editNomineeData.photo" alt="Photo preview" />
+                    </div>
+                </div>
+
+                <div class="form-actions">
+                    <button type="button" class="btn secondary-btn" (click)="closeEditDialog()">Cancel</button>
+                    <button type="submit" class="btn primary-btn">Save Changes</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+
+    <!-- Filters -->
+    <div class="card">
+        <div class="card-header">
+            <h4 class="card-title"><i class="fas fa-search"></i> Search & Filter</h4>
+        </div>
+        <div class="card-body">
+            <div class="filter-bar">
+                <input type="text" [(ngModel)]="searchTerm" placeholder="Search nominees..." class="input" />
+                <select [(ngModel)]="selectedCategory" class="select">
+                    <option value="all">All Categories</option>
+                    <option *ngFor="let category of categories" [value]="category">{{ category }}</option>
+                </select>
+            </div>
+        </div>
+    </div>
+
+    <!-- Nominees Table -->
+    <div class="card">
+        <div class="card-header">
+            <h4 class="card-title"><i class="fas fa-trophy"></i> All Nominees ({{ filteredNominees.length }})</h4>
+            <p class="card-subtitle">Manage and monitor all nominees in the system</p>
+        </div>
+        <div class="table-responsive">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Club</th>
+                        <th>Category</th>
+                        <th>Votes</th>
+                        <th>Status</th>
+                        <th class="text-right">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let nominee of filteredNominees">
+                        <td><strong>{{ nominee.playerName }}</strong></td>
+                        <td>{{ nominee.clubName }}</td>
+                        <td><span class="badge category-badge">{{ nominee.category }}</span></td>
+                        <td>
+                            <span class="votes">
+                                <i class="fas fa-star star-icon"></i> {{ nominee.votes | number }}
+                            </span>
+                        </td>
+                        <td>
+                            <span class="badge status-badge" [ngClass]="getStatusClass(nominee.status)">
+                                {{ nominee.status }}
+                            </span>
+                        </td>
+                        <td class="text-right actions-cell">
+                            <button class="action-btn edit-btn" (click)="editNominee(nominee)">
+                                <i class="fas fa-edit"></i>
+                            </button>
+                            <button class="action-btn delete-btn" (click)="deleteNominee(nominee.nomineeId)">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </td>
+                    </tr>
+                </tbody>
+
+            </table>
+        </div>
+    </div>
+</div>

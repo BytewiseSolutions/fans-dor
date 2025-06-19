@@ -1,0 +1,74 @@
+<div class="overview-section">
+    <!-- Stats Cards -->
+    <div class="stats-cards">
+        <div *ngFor="let stat of stats" class="stats-card">
+            <div class="stats-card-header">
+                <h3 class="stats-title">{{ stat.title }}</h3>
+                <i [ngClass]="stat.color + ' fa-solid fa-' + stat.icon"></i>
+            </div>
+            <div class="stats-card-content">
+                <div class="stats-value">{{ stat.value }}</div>
+                <div class="stats-change">
+                    <i class="fa-solid fa-trending-up"></i>
+                    {{ stat.change }} from last month
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Charts Section -->
+    <div class="charts-section">
+        <!-- Voting by Category Chart -->
+        <div class="chart-card">
+            <div class="chart-card-header">
+                <h3>Votes by Category</h3>
+                <p class="chart-description">Current voting distribution across all categories</p>
+            </div>
+            <div class="chart-card-content">
+                <canvas baseChart [data]="barChartData" [options]="barChartOptions" [type]="'bar'">
+                </canvas>
+            </div>
+        </div>
+
+        <!-- Vote Types Distribution -->
+        <div class="chart-card">
+            <div class="chart-card-header">
+                <h3>Vote Distribution</h3>
+                <p class="chart-description">Breakdown of vote types across the platform</p>
+            </div>
+            <div class="chart-card-content">
+                <canvas baseChart [data]="pieChartData" [options]="pieChartOptions" [type]="'pie'" [width]="200"
+                    [height]="200">
+                </canvas>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Recent Activity -->
+    <div class="card">
+        <div class="card-header">
+            <h3>Recent Activity</h3>
+            <p class="card-description">Latest system activities and important events</p>
+        </div>
+        <div class="card-content">
+            <div *ngFor="let activity of recentActivities" class="activity-item">
+                <div class="activity-left">
+                    <i class="fa-solid fa-clock"></i>
+                    <div class="activity-info">
+                        <p>{{ activity.action }}</p>
+                        <p>{{ activity.details }}</p>
+                    </div>
+                </div>
+                <div class="activity-right">
+                    <span [ngClass]="{
+            'badge-default': activity.status === 'success',
+            'badge-secondary': activity.status === 'warning',
+            'badge-outline': activity.status === 'info'
+          }">{{ activity.status }}</span>
+                    <p class="activity-time">{{ activity.time }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

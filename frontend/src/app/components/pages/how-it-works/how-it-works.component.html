@@ -1,0 +1,19 @@
+<section class="how-it-works">
+    <h2>How It Works</h2>
+
+    <div class="progress-line">
+        <div *ngFor="let step of steps; let i = index" class="dot">
+            <span>{{ step.badge }}</span>
+        </div>
+    </div>
+
+    <div class="steps-grid">
+        <div class="step-card" *ngFor="let step of steps">
+            <div class="icon-circle">
+                <i class="fa-solid {{ step.icon }}"></i>
+            </div>
+            <h3>{{ step.title }}</h3>
+            <p>{{ step.description }}</p>
+        </div>
+    </div>
+</section>

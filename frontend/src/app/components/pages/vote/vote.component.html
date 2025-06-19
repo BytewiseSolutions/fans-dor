@@ -1,0 +1,18 @@
+<section class="vote-page" *ngIf="!voteSubmitted">
+    <h2>Vote for {{ nomineeName }} of {{ club }}</h2>
+    <p>Voting costs $5. Enter your email to receive your confirmation.</p>
+
+    <form (ngSubmit)="submitVote()">
+        <input type="email" [(ngModel)]="userEmail" name="email" placeholder="Your email" required />
+        <button type="submit" [disabled]="isSubmitting">
+            {{ isSubmitting ? 'Processing...' : 'Pay & Vote' }}
+        </button>
+    </form>
+</section>
+
+<section class="thank-you" *ngIf="voteSubmitted">
+    <h2><i class="fa-solid fa-champagne-glasses" style="color:goldenrod;"></i> Thank You for Voting!</h2>
+    <p>Your vote for <strong>{{ nomineeName }}</strong> has been recorded.</p>
+    <p>A confirmation has been sent to <strong>{{ userEmail }}</strong>.</p>
+    <a routerLink="/">Back to Home</a>
+</section>

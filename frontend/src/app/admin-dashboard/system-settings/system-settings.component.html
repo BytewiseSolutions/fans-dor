@@ -1,0 +1,35 @@
+<div class="system-settings">
+    <div class="settings-header">
+        <div class="settings-title">
+            <h2>System Settings</h2>
+            <p>Configure system-wide settings and preferences
+            </p>
+        </div>
+        <button class="save-button" (click)="handleSaveSettings()">
+            <i class="fas fa-save"></i> Save Changes
+        </button>
+    </div>
+
+    <!-- Tabs -->
+    <mat-tab-group class="mat-tab-group mat-primary">
+        <mat-tab label="General" class="mat-tab-label">
+            <app-general-settings [settings]="settings"
+                (settingsChange)="onSettingsChange($event)"></app-general-settings>
+        </mat-tab>
+        <mat-tab label="Voting">
+            <app-voting-settings [settings]="settings"
+                (settingsChange)="onSettingsChange($event)"></app-voting-settings>
+        </mat-tab>
+        <mat-tab label="Payments">
+            <app-payment-settings [settings]="settings"
+                (settingsChange)="onSettingsChange($event)"></app-payment-settings>
+        </mat-tab>
+        <mat-tab label="Email">
+            <app-email-settings [settings]="settings" (settingsChange)="onSettingsChange($event)"></app-email-settings>
+        </mat-tab>
+        <mat-tab label="Security">
+            <app-security-settings [settings]="settings"
+                (settingsChange)="onSettingsChange($event)"></app-security-settings>
+        </mat-tab>
+    </mat-tab-group>
+</div>

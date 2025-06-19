@@ -1,0 +1,28 @@
+<div class="admin-dashboard" [class.sidebar-visible]="showSidebar && !isSidebarCollapsed"
+    [class.sidebar-hidden]="!showSidebar || isSidebarCollapsed">
+
+    <app-admin-sidebar *ngIf="showSidebar" [activeTab]="activeTab" [collapsed]="isSidebarCollapsed"
+        (tabChange)="setActiveTab($event)">
+    </app-admin-sidebar>
+
+    <div class="content-wrapper">
+        <header>
+            <button class="sidebar-trigger" (click)="toggleSidebar()">
+                <i class="fas fa-bars"></i>
+            </button>
+            <h1>{{ activeTab.charAt(0).toUpperCase() + activeTab.slice(1) }}</h1>
+        </header>
+
+        <main>
+            <ng-container [ngSwitch]="activeTab">
+                <app-dashboard-overview *ngSwitchCase="'overview'"></app-dashboard-overview>
+                <app-nominee-management *ngSwitchCase="'nominees'"></app-nominee-management>
+                <app-vote-management *ngSwitchCase="'votes'"></app-vote-management>
+                <app-payment-management *ngSwitchCase="'payments'"></app-payment-management>
+                <app-user-management *ngSwitchCase="'users'"></app-user-management>
+                <app-system-settings *ngSwitchCase="'settings'"></app-system-settings>
+                <app-dashboard-overview *ngSwitchDefault></app-dashboard-overview>
+            </ng-container>
+        </main>
+    </div>
+</div>

@@ -1,0 +1,24 @@
+<aside class="admin-sidebar" [class.collapsed]="collapsed">
+  <div>
+    <div class="sidebar-header">
+      <div class="icon-wrapper">
+        <i class="fa-solid fa-crown"></i>
+      </div>
+      <div class="brand">
+        <h2>Fans D'or</h2>
+        <p>Admin Dashboard</p>
+      </div>
+    </div>
+
+    <ul class="sidebar-menu">
+      <li *ngFor="let item of menuItems" (click)="changeTab(item.value)" [class.active]="activeTab === item.value">
+        <i [class]="item.icon"></i>
+        <span>{{ item.title }}</span>
+      </li>
+    </ul>
+  </div>
+
+  <footer class="sidebar-footer">
+    © 2024 Fans D'or. All rights reserved.
+  </footer>
+</aside>

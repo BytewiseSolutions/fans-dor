@@ -1,0 +1,50 @@
+<div class="card">
+    <div class="card-header">
+        <h2 class="card-title">Security Configuration</h2>
+        <p class="card-description">Manage security and access controls</p>
+    </div>
+
+    <div class="card-content">
+
+        <!-- Allow Registration -->
+        <div class="flex">
+            <div>
+                <label>Allow User Registration</label>
+                <p class="text-muted">Enable new user sign-ups</p>
+            </div>
+            <label class="toggle-switch">
+                <input type="checkbox" [(ngModel)]="settings.allowRegistration"
+                    (ngModelChange)="onChange('allowRegistration', $event)" />
+                <span class="slider"></span>
+            </label>
+        </div>
+
+        <!-- Require Email Verification -->
+        <div class="flex">
+            <div>
+                <label>Require Email Verification</label>
+                <p class="text-muted">Users must verify email before voting</p>
+            </div>
+            <label class="toggle-switch">
+                <input type="checkbox" [(ngModel)]="settings.requireEmailVerification"
+                    (ngModelChange)="onChange('requireEmailVerification', $event)" />
+                <span class="slider"></span>
+            </label>
+        </div>
+
+        <!-- Security Features -->
+        <div>
+            <h4>Security Features</h4>
+            <div class="security-feature-list">
+                <div *ngFor="let feature of securityFeatures" class="security-feature">
+                    <span>{{ feature.name }}</span>
+                    <label class="toggle-switch">
+                        <input type="checkbox" [(ngModel)]="feature.enabled" />
+                        <span class="slider"></span>
+                    </label>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>

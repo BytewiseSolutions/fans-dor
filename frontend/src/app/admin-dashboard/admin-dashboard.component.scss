@@ -1,0 +1,137 @@
+:host {
+  display: flex;
+  width: 100%;
+  min-height: 100vh;
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+
+  &.light-mode {
+    background-color: var(--bg-light);
+      color: var(--text-dark);
+
+    .content-wrapper header {
+      background-color: #ffffff;
+      border-bottom: 1px solid var(--border-light);
+
+      .sidebar-trigger {
+        color: var(--text-dark);
+
+        &:hover {
+          background-color: #eaeaea;
+          color: #000;
+        }
+      }
+
+      h1 {
+        color: #000;
+      }
+    }
+
+    main {
+      background-color: var(--bg-light);
+    }
+  }
+}
+
+.admin-dashboard {
+  display: flex;
+  width: 100%;
+
+  &.sidebar-hidden app-admin-sidebar {
+    display: none;
+  }
+
+  &.sidebar-visible .content-wrapper {
+    margin-left: 250px;
+  }
+
+  &.sidebar-hidden .content-wrapper {
+    margin-left: 0;
+  }
+}
+
+.content-wrapper {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  transition: margin-left 0.3s ease;
+}
+
+header {
+  display: flex;
+  align-items: center;
+  height: 64px;
+  padding: 0 24px;
+  gap: 12px;
+  background-color: #2b2c30;
+  border-bottom: 1px solid #3b3e47;
+
+  .sidebar-trigger {
+    background: transparent;
+    color: #d5ba83;
+    border: none;
+    cursor: pointer;
+    font-size: 20px;
+    padding: 8px;
+
+    &:hover {
+      background-color: #4a4d56;
+      color: #d9bc70;
+    }
+
+    i {
+      pointer-events: none;
+    }
+  }
+
+  h1 {
+    font-size: 20px;
+    font-weight: 600;
+    margin: 0;
+    color: #d5ba83;
+  }
+}
+
+main {
+  flex: 1;
+  padding: 24px;
+  background-color: #3c3f48;
+}
+
+@media screen and (max-width: 768px) {
+  .admin-dashboard {
+    flex-direction: column;
+  }
+
+  .content-wrapper {
+    width: 100%;
+    margin-left: 0;
+  }
+
+  app-admin-sidebar {
+    position: absolute;
+    z-index: 1001;
+    background-color: #1f2128;
+    height: 100%;
+    transition: transform 0.3s ease;
+    transform: translateX(0);
+  }
+
+  app-admin-sidebar.collapsed {
+    transform: translateX(-100%);
+  }
+
+  header {
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 12px;
+
+    .sidebar-trigger {
+      display: inline-block;
+    }
+  }
+
+  main {
+    padding: 16px;
+  }
+}

@@ -1,0 +1,26 @@
+<section class="nominee-list">
+    <h2>2024/25 Fans D’Or Masculin</h2>
+    <div class="grid">
+        <div class="card" *ngFor="let nominee of nominees">
+            <img [src]="nominee.image" alt="{{ nominee.name }}" />
+            <h3>{{ nominee.name }}</h3>
+            <p class="club">{{ nominee.club }}</p>
+            <p class="votes">{{ nominee.votes | number }} votes</p>
+            <div class="actions">
+                <button class="btn" (click)="openBio(nominee)">Bio</button>
+                <a class="btn vote" [routerLink]="['/vote', nominee.name.toLowerCase().replaceAll(' ', '-')]"
+                    [queryParams]="{ club: nominee.club }">Vote</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Bio Modal -->
+<div class="bio-modal" *ngIf="selectedNominee">
+    <div class="bio-content">
+        <h3>{{ selectedNominee.name }}</h3>
+        <p><strong>Club:</strong> {{ selectedNominee.club }}</p>
+        <p>{{ selectedNominee.bio }}</p>
+        <button class="close-btn" (click)="closeBio()">Close</button>
+    </div>
+</div>

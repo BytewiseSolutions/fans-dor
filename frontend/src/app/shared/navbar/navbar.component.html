@@ -1,0 +1,40 @@
+<header class="navbar">
+    <div class="nav-container">
+        <div class="logo">
+            <a routerLink="/">FANS D’OR</a>
+        </div>
+
+        <button class="menu-toggle" (click)="toggleMenu()" aria-label="Toggle navigation">
+            &#9776;
+        </button>
+
+        <nav class="nav-links" [class.active]="menuOpen">
+            <a routerLink="/about" (click)="closeMenu()">About</a>
+            <a routerLink="/how-it-works" (click)="closeMenu()">How it Works</a>
+            <a routerLink="/faqs" (click)="closeMenu()">FAQs</a>
+            <a routerLink="/categories" (click)="closeMenu()">Categories</a>
+
+            <!-- Notification -->
+            <!-- <div class="notification-wrapper" (click)="toggleNotification()" tabindex="0" aria-label="Notifications"
+                role="button">
+                <i class="fas fa-bell notification-icon"></i>
+                <span class="notification-badge" *ngIf="highestVotesCount > 0">{{ highestVotesCount }}</span>
+            </div> -->
+
+            <!-- Notification Drop-down -->
+            <div class="notification-dropdown" *ngIf="notificationOpen">
+                <ng-container *ngIf="topNominees.length > 0; else noVotes">
+                    <div *ngFor="let nominee of topNominees; let i = index">
+                        <p><strong>Nominee:</strong> {{ nominee }}</p>
+                        <p><strong>Club:</strong> {{ clubs[i] }}</p>
+                        <p><strong>Votes:</strong> {{ highestVotesCount }}</p>
+                        <hr *ngIf="i < topNominees.length - 1" />
+                    </div>
+                </ng-container>
+                <ng-template #noVotes>
+                    <p>No votes yet</p>
+                </ng-template>
+            </div>
+        </nav>
+    </div>
+</header>

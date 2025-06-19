@@ -1,0 +1,104 @@
+<section class="contact-hero">
+    <div class="container">
+        <h1>Contact Us</h1>
+        <p>We’d love to hear from you—questions, feedback, or just to say hello!</p>
+    </div>
+</section>
+
+<section class="contact-content">
+    <div class="contact-grid-2-cols">
+        <!-- Lesotho Contact Card -->
+        <div class="info-card">
+            <h2>Lesotho Office</h2>
+            <div class="info-group">
+                <i class="fa-solid fa-envelope"></i>
+                <a href="mailto:monamane.lebohang45@gmail.com">monamane.lebohang45&#64;gmail.com</a>
+            </div>
+
+            <div class="info-group">
+                <i class="fa-solid fa-phone"></i>
+                <span>+266 59181664</span>
+            </div>
+
+            <div class="phone-options">
+                <div class="actions">
+                    <a [href]="'tel:+26659181664'" title="Call"><i class="fa-solid fa-phone"></i></a>
+                    <a [href]="'https://wa.me/26659181664'" target="_blank" title="WhatsApp"><i
+                            class="fa-brands fa-whatsapp"></i></a>
+                </div>
+            </div>
+
+            <div class="info-group">
+                <i class="fa-solid fa-map-marker-alt"></i>
+                <span>Maseru, Lesotho</span>
+            </div>
+            <div class="social-links">
+                <a href="https://www.facebook.com/profile.php?id=100094670365232" aria-label="Facebook"><i
+                        class="fa-brands fa-facebook-f"></i></a>
+                <a href="https://www.linkedin.com/in/lebohang-monamane-707354298" aria-label="LinkedIn"><i
+                        class="fa-brands fa-linkedin"></i></a>
+                <a href="https://www.instagram.com/monamane.lebohang?igsh=MTQwZGZvY2lqMHVoeA=="
+                    aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+            </div>
+        </div>
+
+        <!-- South Africa Contact Card -->
+        <div class="info-card">
+            <h2>South Africa Office</h2>
+            <div class="info-group">
+                <i class="fa-solid fa-envelope"></i>
+                <a href="mailto:dolanhlapho@gmail.com">dolanhlapho&#64;gmail.com</a>
+            </div>
+            <div class="info-group">
+                <i class="fa-solid fa-phone"></i>
+                <span>+27 67 155 0036</span>
+            </div>
+            <div class="phone-options">
+                <div class="actions">
+                    <a [href]="'tel:+27671550036'" title="Call"><i class="fa-solid fa-phone"></i></a>
+                    <a [href]="'https://wa.me/27671550036'" target="_blank" title="WhatsApp"><i
+                            class="fa-brands fa-whatsapp"></i></a>
+                </div>
+            </div>
+
+            <div class="info-group">
+                <i class="fa-solid fa-map-marker-alt"></i>
+                <span>Johannesburg, South Africa</span>
+            </div>
+            <div class="social-links">
+                <a href="#" aria-label="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
+                <a href="#" aria-label="LinkedIn"><i class="fa-brands fa-linkedin"></i></a>
+                <a href="#" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Contact Form Full Width -->
+    <div class="form-row">
+        <div class="form-card" *ngIf="!submitted">
+            <h2>Send Us a Message</h2>
+            <form (ngSubmit)="submitForm()">
+                <label>
+                    Name
+                    <input type="text" [(ngModel)]="name" name="name" required />
+                </label>
+                <label>
+                    Email
+                    <input type="email" [(ngModel)]="email" name="email" required />
+                </label>
+                <label>
+                    Message
+                    <textarea rows="5" [(ngModel)]="message" name="message" required></textarea>
+                </label>
+                <button type="submit" class="btn-submit">Submit</button>
+            </form>
+        </div>
+
+        <div class="form-card thank-you" *ngIf="submitted">
+            <h2>Thank You!</h2>
+            <p>Your message has been sent. We’ll get back to you soon.</p>
+            <a routerLink="/" class="btn-home">Return Home</a>
+        </div>
+    </div>
+</section>

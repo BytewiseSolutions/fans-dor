@@ -1,0 +1,41 @@
+<section class="category-detail" *ngIf="category">
+    <h2 class="title">2024/25 {{ category.name }}</h2>
+
+    <!-- If nominees exist -->
+    <div *ngIf="category.nominees.length > 0" class="nominee-grid">
+        <div class="nominee-card" *ngFor="let nominee of category.nominees">
+            <img [src]="nominee.photo || 'assets/default-player.png'" alt="{{ nominee.playerName }}">
+            <h3>{{ nominee.playerName }}</h3>
+            <p class="club">{{ nominee.clubName }}</p>
+            <p class="votes">{{ nominee.votes || 0 }} votes</p>
+            <div class="actions">
+                <button class="btn" (click)="openBio(nominee)">Bio</button>
+                <a class="btn vote" [routerLink]="['/vote', nominee.nomineeId]"
+                    [queryParams]="{ club: nominee.clubName }">
+                    Vote
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- If no nominees found -->
+<div *ngIf="category.nominees.length === 0" class="no-nominees">
+    <i class="fa-solid fa-circle-info info-icon"></i>
+    <p>No nominees are currently available in <strong>{{ category.name }}</strong>.</p>
+    <a routerLink="/categories" class="back-btn">
+        <i class="fa-solid fa-arrow-left"></i> Back to Categories
+    </a>
+</div>
+
+
+    <!-- Bio Modal -->
+    <div class="bio-modal" *ngIf="selectedNominee">
+        <div class="bio-content">
+            <span class="close-btn" (click)="closeBio()">&times;</span>
+            <h3>{{ selectedNominee.playerName }}</h3>
+            <img [src]="selectedNominee.photo || 'assets/default-player.png'" alt="Photo">
+            <p><strong>Club:</strong> {{ selectedNominee.clubName }}</p>
+            <p class="bio">{{ selectedNominee.description }}</p>
+        </div>
+    </div>
+</section>

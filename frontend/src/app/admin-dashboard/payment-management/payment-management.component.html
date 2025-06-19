@@ -1,0 +1,145 @@
+<div class="payment-management">
+
+    <!-- Header -->
+    <div class="payment-header">
+        <div class="header-title">
+            <h2>Payment Management</h2>
+            <p>Monitor transactions and revenue</p>
+        </div>
+        <div class="header-actions">
+            <button class="btn btn-outline">
+                <i class="fas fa-sync-alt"></i>
+                Sync
+            </button>
+            <button class="btn btn-primary">
+                <i class="fas fa-download"></i>
+                Export
+            </button>
+        </div>
+    </div>
+
+    <!-- Payment Statistics Cards -->
+    <div class="payment-grid">
+        <!-- Total Revenue -->
+        <div class="card">
+            <div class="card-header">
+                <h3>Total Revenue</h3>
+                <i class="fas fa-dollar-sign text-green"></i>
+            </div>
+            <div class="card-content">
+                <div class="text-2xl font-bold">${{ totalRevenue }}</div>
+                <p class="text-xs text-muted-foreground">
+                    <i class="fas fa-chart-line inline mr-1"></i> +15% from last week
+                </p>
+            </div>
+        </div>
+        <!-- Pending Payments -->
+        <div class="card">
+            <div class="card-header flex items-center justify-between pb-2">
+                <h3>Pending Payments</h3>
+                <i class="fas fa-calendar-alt text-yellow"></i>
+            </div>
+            <div class="card-content">
+                <div class="text-2xl font-bold">${{ pendingAmount }}</div>
+                <p class="text-xs text-muted-foreground">Awaiting processing</p>
+            </div>
+        </div>
+        <!-- Completed Transactions -->
+        <div class="card">
+            <div class="card-header flex items-center justify-between pb-2">
+                <h3>Completed</h3>
+                <i class="fas fa-credit-card text-blue"></i>
+            </div>
+            <div class="card-content">
+                <div class="text-2xl font-bold">{{ completedTransactions }}</div>
+                <p class="text-xs text-muted-foreground">Successful transactions</p>
+            </div>
+        </div>
+        <!-- Failed Payments -->
+        <div class="card">
+            <div class="card-header flex items-center justify-between pb-2">
+                <h3>Failed Payments</h3>
+                <i class="fas fa-exclamation-circle text-red"></i>
+            </div>
+            <div class="card-content">
+                <div class="text-2xl font-bold">{{ failedTransactions }}</div>
+                <p class="text-xs text-muted-foreground">Require attention</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Revenue Chart -->
+    <div class="card">
+        <div class="card-header">
+            <h3>Revenue Trends</h3>
+            <p class="card-description">Daily revenue over the past week</p>
+        </div>
+        <div class="card-content">
+            <highcharts-chart [Highcharts]="HighCharts" [options]="chartOptions"
+                style="width: 100%; height: 400px; display: block;"></highcharts-chart>
+        </div>
+    </div>
+
+    <!-- Filters -->
+    <div class="card">
+        <div class="card-header content-filter">
+            <i class="fas fa-search"></i>
+            <h3>Search & Filter Payments</h3>
+        </div>
+        <div class="card-content payment-filters">
+            <input type="text" [(ngModel)]="searchTerm" placeholder="Search by email or transaction ID..."
+                class="form-control" />
+            <select [(ngModel)]="filterStatus" class="form-control">
+                <option value="all">All Status</option>
+                <option value="completed">Completed</option>
+                <option value="pending">Pending</option>
+                <option value="failed">Failed</option>
+                <option value="refunded">Refunded</option>
+            </select>
+        </div>
+    </div>
+
+    <!-- Payments Table -->
+    <div class="card">
+        <div class="card-header">
+            <h3>Transaction History ({{ filteredPayments.length }})</h3>
+            <p>Detailed view of all payment transactions</p>
+        </div>
+        <div class="card-content">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>User</th>
+                        <th>Amount</th>
+                        <th>Nominee</th>
+                        <th>Method</th>
+                        <th>Status</th>
+                        <th>Transaction ID</th>
+                        <th>Date</th>
+                        <th class="text-right">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let p of filteredPayments">
+                        <td>{{ p.userEmail }}</td>
+                        <td class="font-semibold">${{ p.amount }} {{ p.currency }}</td>
+                        <td>
+                            <div>
+                                <div class="font-medium">{{ p.nominee }}</div>
+                                <div class="text-sm">{{ p.category }}</div>
+                            </div>
+                        </td>
+                        <td>{{ p.paymentMethod }}</td>
+                        <td><span [class]=" getStatusClass(p.status) ">{{ p.status }}</span></td>
+                        <td class="ext-sm">{{ p.transactionId }}</td>
+                        <td>{{ p.timestamp }}</td>
+                        <td class="text-right">
+                            <button class="btn btn-sm btn-outline">View Details</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</div>
